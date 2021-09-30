@@ -1,6 +1,6 @@
-import './App.css'
 import Cards from './components/Cards'
 import { useState } from 'react'
+import styled from 'styled-components'
 
 const exampleData = [
   {
@@ -25,12 +25,20 @@ const exampleData = [
 function App() {
   const [data, setData] = useState(exampleData)
   return (
-    <div className="App">
+    <MainSection>
       {data.map(data => (
         <Cards author={data.author} text={data.text} />
       ))}
-    </div>
+    </MainSection>
   )
 }
 
 export default App
+
+const MainSection = styled.main`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 10px;
+`
