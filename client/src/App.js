@@ -1,5 +1,6 @@
 import './App.css'
 import Cards from './components/Cards'
+import { useState } from 'react'
 
 const exampleData = [
   {
@@ -22,9 +23,12 @@ const exampleData = [
 ]
 
 function App() {
+  const [data, setData] = useState(exampleData)
   return (
     <div className="App">
-      <Cards />
+      {data.map(data => (
+        <Cards author={data.author} text={data.text} />
+      ))}
     </div>
   )
 }

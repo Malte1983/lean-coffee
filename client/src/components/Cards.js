@@ -1,8 +1,8 @@
-function Cards() {
+function Cards({ author, text }) {
   return (
     <div>
-      <div>Question</div>
-      <div>Author</div>
+      <div>{author}</div>
+      <div>{text}</div>
     </div>
   )
 }
