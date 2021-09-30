@@ -11,7 +11,7 @@ function Cards({ author, text }) {
 
 export default Cards
 
-const CardWrapper = styled.div`
+const CardWrapper = styled.article`
   border: 2px solid black;
   padding: 20px;
   display: flex;

@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.1",
     "express": "^4.17.1",
     "mongodb": "^4.1.2",
     "mongoose": "^6.0.8",
