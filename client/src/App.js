@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import Card from './components/Card'
+import { useState } from 'react'
+import styled from 'styled-components/macro'
+
+const exampleData = [
+  {
+    author: 'Malte S.',
+    text: 'Wie lernt man Node.js?',
+    id: 1,
+  },
+
+  {
+    author: 'Mareike B.',
+    text: 'What is Error-Handling?',
+    id: 2,
+  },
+  {
+    author: 'Fabian H.',
+    text: 'What is MongoDB?',
+    id: 3,
+  },
+  {
+    author: 'Sabrina W.',
+    text: 'What is Node?',
+    id: 4,
+  },
+]
 
 function App() {
+  const [data, setData] = useState(exampleData)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Main>
+      {data.map(data => (
+        <Card author={data.author} text={data.text} key={data.id}/>
+      ))}
+    </Main>
+  )
 }
 
-export default App;
+export default App
+
+const Main = styled.main`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 10px;
+`
