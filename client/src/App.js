@@ -37,16 +37,6 @@ function App() {
     }
   })
 
-  // const localStorageInit = () => {
-  //   if (localStorage.getItem('data') === null) {
-  //     localStorage.setItem('data', JSON.stringify(exampleData))
-  //   } else if (localStorage.getItem('data')) {
-  //     JSON.parse(localStorage.getItem('data'))
-  //   }
-  // }
-
-  // localStorageInit()
-
   return (
     <Main>
       {data.map(data => (
