@@ -2,6 +2,7 @@ import Card from './components/Card'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
 import Footer from './components/Footer/Footer'
+import { nanoid } from 'nanoid'
 
 const exampleData = [
   {
@@ -38,17 +39,16 @@ function App() {
     </Main>
   )
   function handleCreateQuestion({ text, author }) {
-    let i = data.length
-    i++
     const newQuestion = [
       ...data,
       {
-        id: i,
+        id: nanoid(),
         text: text,
         author: author,
       },
     ]
     setData(newQuestion)
+    console.log(data)
   }
 }
 
