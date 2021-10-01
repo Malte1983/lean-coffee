@@ -1,41 +1,45 @@
-import Cards from './components/Cards'
+import Card from './components/Card'
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const exampleData = [
   {
-    author: 'Max Muster',
-    text: 'First example-text',
+    author: 'Malte S.',
+    text: 'Wie lernt man Node.js?',
+    id: 1,
   },
 
   {
-    author: 'Tina Müller',
-    text: 'second example-text',
+    author: 'Mareike B.',
+    text: 'What is Error-Handling?',
+    id: 2,
   },
   {
-    author: 'Peter Schröder',
-    text: 'third example-text',
+    author: 'Fabian H.',
+    text: 'What is MongoDB?',
+    id: 3,
   },
   {
-    author: 'Sabrina Wilde',
-    text: 'fourth example-text',
+    author: 'Sabrina W.',
+    text: 'What is Node?',
+    id: 4,
   },
 ]
 
 function App() {
   const [data, setData] = useState(exampleData)
   return (
-    <MainSection>
+    <Main>
       {data.map(data => (
-        <Cards author={data.author} text={data.text} />
+        <Card author={data.author} text={data.text} key={data.id}/>
       ))}
-    </MainSection>
+    </Main>
   )
 }
 
 export default App
 
-const MainSection = styled.main`
+const Main = styled.main`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;

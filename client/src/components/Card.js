@@ -1,22 +1,21 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 function Cards({ author, text }) {
   return (
-    <CardWrapper>
-      <CardText>{text}</CardText>
-      <CardAuthor>{author}</CardAuthor>
-    </CardWrapper>
+    <Wrapper>
+      <Text>{text}</Text>
+      <Author>{author}</Author>
+    </Wrapper>
   )
 }
 
 export default Cards
 
-const CardWrapper = styled.article`
+const Wrapper = styled.article`
   border: 2px solid black;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
   border-radius: 20px;
   min-width: 30%;
   max-width: 250px;
@@ -26,9 +25,12 @@ const CardWrapper = styled.article`
   } ;
 `
 
-const CardText = styled.div`
+const Text = styled.h2`
   margin-bottom: 20px;
   font-size: 1.5rem;
+  font-weight: 500;
 `
 
-const CardAuthor = styled.div``
+const Author = styled.div`
+  align-self: flex-end;
+`;
