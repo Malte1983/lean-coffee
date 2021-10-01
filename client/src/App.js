@@ -1,6 +1,7 @@
 import Card from './components/Card'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
+import Footer from './components/Footer/Footer'
 
 const exampleData = [
   {
@@ -33,6 +34,7 @@ function App() {
       {data.map(data => (
         <Card author={data.author} text={data.text} key={data.id}/>
       ))}
+      <Footer />
     </Main>
   )
 }

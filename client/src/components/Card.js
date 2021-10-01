@@ -22,6 +22,7 @@ const Wrapper = styled.article`
 
   @media only screen and (max-width: 516px) {
     width: 100%;
+    min-width: 100%;
   } ;
 `
 
