@@ -30,6 +30,17 @@ const exampleData = [
 
 function App() {
   const [data, setData] = useState(exampleData)
+
+  const localStorageInit = () => {
+    if (localStorage.getItem('data') === null) {
+      localStorage.setItem('data', JSON.stringify(exampleData))
+    } else if (localStorage.getItem('data')) {
+      JSON.parse(localStorage.getItem('data'))
+    }
+  }
+
+  localStorageInit()
+
   return (
     <Main>
       {data.map(data => (
@@ -47,8 +58,9 @@ function App() {
         author: author,
       },
     ]
+    const stringifiedValue = JSON.stringify(newQuestion)
+    localStorage.setItem('data', stringifiedValue)
     setData(newQuestion)
-    console.log(data)
   }
 }
 
