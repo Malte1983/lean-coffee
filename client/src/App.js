@@ -32,11 +32,24 @@ function App() {
   return (
     <Main>
       {data.map(data => (
-        <Card author={data.author} text={data.text} key={data.id}/>
+        <Card author={data.author} text={data.text} key={data.id} />
       ))}
-      <Footer />
+      <Footer onCreateQuestion={handleCreateQuestion} />
     </Main>
   )
+  function handleCreateQuestion({ text, author }) {
+    let i = data.length
+    i++
+    const newQuestion = [
+      ...data,
+      {
+        id: i,
+        text: text,
+        author: author,
+      },
+    ]
+    setData(newQuestion)
+  }
 }
 
 export default App
