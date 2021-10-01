@@ -1,6 +1,8 @@
 import Card from './components/Card'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
+import Footer from './components/Footer/Footer'
+import { nanoid } from 'nanoid'
 
 const exampleData = [
   {
@@ -31,10 +33,23 @@ function App() {
   return (
     <Main>
       {data.map(data => (
-        <Card author={data.author} text={data.text} key={data.id}/>
+        <Card author={data.author} text={data.text} key={data.id} />
       ))}
+      <Footer onCreateQuestion={handleCreateQuestion} />
     </Main>
   )
+  function handleCreateQuestion({ text, author }) {
+    const newQuestion = [
+      ...data,
+      {
+        id: nanoid(),
+        text: text,
+        author: author,
+      },
+    ]
+    setData(newQuestion)
+    console.log(data)
+  }
 }
 
 export default App
