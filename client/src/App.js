@@ -40,7 +40,13 @@ function App() {
   return (
     <Main>
       {data.map(data => (
-        <Card author={data.author} text={data.text} key={data.id} />
+        <Card
+          author={data.author}
+          text={data.text}
+          key={data.id}
+          onDeleteButtonClick={handleDeleteButton}
+          id={data.id}
+        />
       ))}
       <Footer onCreateQuestion={handleCreateQuestion} />
     </Main>
@@ -57,6 +63,10 @@ function App() {
     const stringifiedValue = JSON.stringify(newQuestion)
     localStorage.setItem('data', stringifiedValue)
     setData(newQuestion)
+  }
+  function handleDeleteButton(id) {
+    const filteredData = data.filter(card => card.id !== id)
+    setData(filteredData)
   }
 }
 

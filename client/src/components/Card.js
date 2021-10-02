@@ -1,10 +1,10 @@
 import styled from 'styled-components/macro'
 
-function Cards({ author, text }) {
+function Cards({ author, text, onDeleteButtonClick, id }) {
   return (
     <Wrapper>
       <ButtonWrapper>
-        <DeleteButton>X</DeleteButton>
+        <DeleteButton onClick={() => onDeleteButtonClick(id)}>X</DeleteButton>
       </ButtonWrapper>
       <Text>{text}</Text>
       <Author>{author}</Author>
