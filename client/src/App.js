@@ -3,8 +3,8 @@ import { useState } from 'react'
 import styled from 'styled-components/macro'
 import Footer from './components/Footer/Footer'
 import { nanoid } from 'nanoid'
-import { Route, Switch } from 'react-router-dom'
 import Login from './components/Login'
+import { Route, Switch } from 'react-router-dom'
 
 const exampleData = [
   {
@@ -39,11 +39,14 @@ function App() {
     }
   })
 
+  const [authorName, setAuthorName] = useState('')
+  console.log(authorName)
+
   return (
     <Main>
       <Switch>
         <Route exact path="/">
-          <Login />
+          <Login onHandleSubmitAuthor={handleSubmitAuthor} />
         </Route>
         <Route exact path="/board">
           {data.map(data => (
@@ -55,24 +58,38 @@ function App() {
               id={data.id}
             />
           ))}
-          <Footer onCreateQuestion={handleCreateQuestion} />
+          <Footer
+            // authorName={authorName}
+            onCreateQuestion={handleCreateQuestion}
+            onHandleAuthorLocalStorage={handleAuthorLocalStorage}
+          />
         </Route>
       </Switch>
     </Main>
   )
 
-  // function addAuthor() {
-  //   const author = newAuthor
-  //   return newAuthor
-  // }
+  function handleSubmitAuthor(event) {
+    event.preventDefault()
+    const form = event.target
+    const author = form.elements.author.value
+    const stringifiedValue = JSON.stringify(author)
+    localStorage.setItem('author', stringifiedValue)
+    setAuthorName(author)
+  }
 
+  function handleAuthorLocalStorage() {
+    if (localStorage.getItem('author')) {
+      const newAuthor = JSON.parse(localStorage.getItem('author'))
+      return newAuthor
+    }
+  }
   function handleCreateQuestion({ text, author }) {
     const newQuestion = [
       ...data,
       {
         id: nanoid(),
         text: text,
-        author: addAuthor(author),
+        author: author,
       },
     ]
     const stringifiedValue = JSON.stringify(newQuestion)

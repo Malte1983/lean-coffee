@@ -1,13 +1,13 @@
 import styled from 'styled-components/macro'
 import React from 'react'
 
-function Footer({ onCreateQuestion }) {
+function Footer({ onCreateQuestion, onHandleAuthorLocalStorage }) {
   return (
     <Wrapper onSubmit={e => handleSubmit(e)}>
       <Label aria-label="Add new question">
         <TextInput
           name="question"
-          placeholder="Enter your question here!"
+          placeholder={`${onHandleAuthorLocalStorage()} writes...`}
           type="text"
         />
       </Label>
@@ -21,7 +21,7 @@ function Footer({ onCreateQuestion }) {
 
     onCreateQuestion({
       text: question.value,
-      // author: 'Unbekannt',
+      author: onHandleAuthorLocalStorage(),
     })
     form.reset()
   }
