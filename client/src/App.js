@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 import Footer from './components/Footer/Footer'
 import { nanoid } from 'nanoid'
 import Login from './components/Login'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 const exampleData = [
   {
@@ -46,7 +46,11 @@ function App() {
     <Main>
       <Switch>
         <Route exact path="/">
-          <Login onHandleSubmitAuthor={handleSubmitAuthor} />
+          {localStorage.getItem('author') ? (
+            <Redirect to="board" />
+          ) : (
+            <Login onHandleSubmitAuthor={handleSubmitAuthor} />
+          )}
         </Route>
         <Route exact path="/board">
           {data.map(data => (
@@ -59,7 +63,6 @@ function App() {
             />
           ))}
           <Footer
-            // authorName={authorName}
             onCreateQuestion={handleCreateQuestion}
             onHandleAuthorLocalStorage={handleAuthorLocalStorage}
           />
@@ -83,6 +86,7 @@ function App() {
       return newAuthor
     }
   }
+
   function handleCreateQuestion({ text, author }) {
     const newQuestion = [
       ...data,
