@@ -3,6 +3,8 @@ import { useState } from 'react'
 import styled from 'styled-components/macro'
 import Footer from './components/Footer/Footer'
 import { nanoid } from 'nanoid'
+import { Route, Switch } from 'react-router-dom'
+import Login from './components/Login'
 
 const exampleData = [
   {
@@ -39,25 +41,38 @@ function App() {
 
   return (
     <Main>
-      {data.map(data => (
-        <Card
-          author={data.author}
-          text={data.text}
-          key={data.id}
-          onDeleteButtonClick={handleDeleteButton}
-          id={data.id}
-        />
-      ))}
-      <Footer onCreateQuestion={handleCreateQuestion} />
+      <Switch>
+        <Route exact path="/">
+          <Login />
+        </Route>
+        <Route exact path="/board">
+          {data.map(data => (
+            <Card
+              author={data.author}
+              text={data.text}
+              key={data.id}
+              onDeleteButtonClick={handleDeleteButton}
+              id={data.id}
+            />
+          ))}
+          <Footer onCreateQuestion={handleCreateQuestion} />
+        </Route>
+      </Switch>
     </Main>
   )
+
+  // function addAuthor() {
+  //   const author = newAuthor
+  //   return newAuthor
+  // }
+
   function handleCreateQuestion({ text, author }) {
     const newQuestion = [
       ...data,
       {
         id: nanoid(),
         text: text,
-        author: author,
+        author: addAuthor(author),
       },
     ]
     const stringifiedValue = JSON.stringify(newQuestion)

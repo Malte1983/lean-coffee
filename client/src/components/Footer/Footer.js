@@ -21,7 +21,7 @@ function Footer({ onCreateQuestion }) {
 
     onCreateQuestion({
       text: question.value,
-      author: 'Unbekannt',
+      // author: 'Unbekannt',
     })
     form.reset()
   }
