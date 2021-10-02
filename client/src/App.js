@@ -3,6 +3,8 @@ import { useState } from 'react'
 import styled from 'styled-components/macro'
 import Footer from './components/Footer/Footer'
 import { nanoid } from 'nanoid'
+import Login from './components/Login'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 const exampleData = [
   {
@@ -37,14 +39,54 @@ function App() {
     }
   })
 
+  const [authorName, setAuthorName] = useState('')
+  console.log(authorName)
+
   return (
     <Main>
-      {data.map(data => (
-        <Card author={data.author} text={data.text} key={data.id} />
-      ))}
-      <Footer onCreateQuestion={handleCreateQuestion} />
+      <Switch>
+        <Route exact path="/">
+          {localStorage.getItem('author') ? (
+            <Redirect to="board" />
+          ) : (
+            <Login onHandleSubmitAuthor={handleSubmitAuthor} />
+          )}
+        </Route>
+        <Route exact path="/board">
+          {data.map(data => (
+            <Card
+              author={data.author}
+              text={data.text}
+              key={data.id}
+              onDeleteButtonClick={handleDeleteButton}
+              id={data.id}
+            />
+          ))}
+          <Footer
+            onCreateQuestion={handleCreateQuestion}
+            onHandleAuthorLocalStorage={handleAuthorLocalStorage}
+          />
+        </Route>
+      </Switch>
     </Main>
   )
+
+  function handleSubmitAuthor(event) {
+    event.preventDefault()
+    const form = event.target
+    const author = form.elements.author.value
+    const stringifiedValue = JSON.stringify(author)
+    localStorage.setItem('author', stringifiedValue)
+    setAuthorName(author)
+  }
+
+  function handleAuthorLocalStorage() {
+    if (localStorage.getItem('author')) {
+      const newAuthor = JSON.parse(localStorage.getItem('author'))
+      return newAuthor
+    }
+  }
+
   function handleCreateQuestion({ text, author }) {
     const newQuestion = [
       ...data,
@@ -57,6 +99,12 @@ function App() {
     const stringifiedValue = JSON.stringify(newQuestion)
     localStorage.setItem('data', stringifiedValue)
     setData(newQuestion)
+  }
+  function handleDeleteButton(id) {
+    const filteredData = data.filter(card => card.id !== id)
+    const stringifiedValue = JSON.stringify(filteredData)
+    localStorage.setItem('data', stringifiedValue)
+    setData(filteredData)
   }
 }
 
