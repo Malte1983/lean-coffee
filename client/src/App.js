@@ -66,6 +66,8 @@ function App() {
   }
   function handleDeleteButton(id) {
     const filteredData = data.filter(card => card.id !== id)
+    const stringifiedValue = JSON.stringify(filteredData)
+    localStorage.setItem('data', stringifiedValue)
     setData(filteredData)
   }
 }
