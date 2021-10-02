@@ -3,6 +3,9 @@ import styled from 'styled-components/macro'
 function Cards({ author, text }) {
   return (
     <Wrapper>
+      <ButtonWrapper>
+        <DeleteButton>X</DeleteButton>
+      </ButtonWrapper>
       <Text>{text}</Text>
       <Author>{author}</Author>
     </Wrapper>
@@ -34,4 +37,15 @@ const Text = styled.h2`
 
 const Author = styled.div`
   align-self: flex-end;
-`;
+`
+
+const DeleteButton = styled.button`
+  padding: 5px;
+  background-color: black;
+  color: white;
+  font-weight: 800;
+`
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
