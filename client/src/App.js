@@ -5,16 +5,9 @@ import Footer from './components/Footer/Footer'
 import Login from './components/Login'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import getCards from './services/getCards'
+import postCard from './services/postCard'
 
 function App() {
-  // const [data, setData] = useState(() => {
-  //   if (localStorage.getItem('data')) {
-  //     return JSON.parse(localStorage.getItem('data'))
-  //   } else {
-  //     return exampleData
-  //   }
-  // })
-
   const [authorName, setAuthorName] = useState('')
   const [cards, setCards] = useState([])
   useEffect(() => {
@@ -22,6 +15,35 @@ function App() {
       .then(data => setCards(data))
       .catch(error => console.error(error))
   }, [])
+
+  function createCard(card) {
+    console.log(card)
+    fetch('/api/cards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(card),
+    })
+      .then(res => res.json())
+      .then(data => setCards([...cards, data]))
+      .catch(error => console.error(error))
+  }
+
+  function deleteCard(card) {
+    console.log(card)
+    fetch(`/api/cards/${card}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(card),
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
+
+      .catch(error => console.error(error))
+  }
 
   return (
     <Main>
@@ -39,12 +61,12 @@ function App() {
               author={card.author}
               text={card.text}
               key={card._id}
-              onDeleteButtonClick={handleDeleteButton}
+              onDeleteButtonClick={deleteCard}
               id={card._id}
             />
           ))}
           <Footer
-            onCreateQuestion={handleCreateQuestion}
+            onCreateQuestion={createCard}
             onHandleAuthorLocalStorage={handleAuthorLocalStorage}
           />
         </Route>
@@ -68,24 +90,12 @@ function App() {
     }
   }
 
-  function handleCreateQuestion({ text, author }) {
-    const newQuestion = [
-      ...cards,
-      {
-        text: text,
-        author: author,
-      },
-    ]
-    // const stringifiedValue = JSON.stringify(newQuestion)
-    // localStorage.setItem('data', stringifiedValue)
-    setCards(newQuestion)
-  }
-  function handleDeleteButton(id) {
-    const filteredData = cards.filter(card => card.id !== id)
-    const stringifiedValue = JSON.stringify(filteredData)
-    localStorage.setItem('data', stringifiedValue)
-    setCards(filteredData)
-  }
+  //   function handleDeleteButton(id) {
+  //     const filteredData = cards.filter(card => card.id !== id)
+  //     // const stringifiedValue = JSON.stringify(filteredData)
+  //     // localStorage.setItem('data', stringifiedValue)
+  //     setCards(filteredData)
+  //   }
 }
 
 export default App
