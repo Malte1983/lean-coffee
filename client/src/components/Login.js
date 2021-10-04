@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro'
-import { useState } from 'react'
 
 export default function Login({ onHandleSubmitAuthor }) {
   return (

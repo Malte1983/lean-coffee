@@ -1,46 +1,27 @@
 import Card from './components/Card'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import Footer from './components/Footer/Footer'
-import { nanoid } from 'nanoid'
 import Login from './components/Login'
 import { Route, Switch, Redirect } from 'react-router-dom'
-
-const exampleData = [
-  {
-    author: 'Malte S.',
-    text: 'Wie lernt man Node.js?',
-    id: 1,
-  },
-
-  {
-    author: 'Mareike B.',
-    text: 'What is Error-Handling?',
-    id: 2,
-  },
-  {
-    author: 'Fabian H.',
-    text: 'What is MongoDB?',
-    id: 3,
-  },
-  {
-    author: 'Sabrina W.',
-    text: 'What is Node?',
-    id: 4,
-  },
-]
+import getCards from './services/getCards'
 
 function App() {
-  const [data, setData] = useState(() => {
-    if (localStorage.getItem('data')) {
-      return JSON.parse(localStorage.getItem('data'))
-    } else {
-      return exampleData
-    }
-  })
+  // const [data, setData] = useState(() => {
+  //   if (localStorage.getItem('data')) {
+  //     return JSON.parse(localStorage.getItem('data'))
+  //   } else {
+  //     return exampleData
+  //   }
+  // })
 
   const [authorName, setAuthorName] = useState('')
-  console.log(authorName)
+  const [cards, setCards] = useState([])
+  useEffect(() => {
+    getCards()
+      .then(data => setCards(data))
+      .catch(error => console.error(error))
+  }, [])
 
   return (
     <Main>
@@ -53,13 +34,13 @@ function App() {
           )}
         </Route>
         <Route exact path="/board">
-          {data.map(data => (
+          {cards.map(card => (
             <Card
-              author={data.author}
-              text={data.text}
-              key={data.id}
+              author={card.author}
+              text={card.text}
+              key={card._id}
               onDeleteButtonClick={handleDeleteButton}
-              id={data.id}
+              id={card._id}
             />
           ))}
           <Footer
@@ -89,22 +70,21 @@ function App() {
 
   function handleCreateQuestion({ text, author }) {
     const newQuestion = [
-      ...data,
+      ...cards,
       {
-        id: nanoid(),
         text: text,
         author: author,
       },
     ]
-    const stringifiedValue = JSON.stringify(newQuestion)
-    localStorage.setItem('data', stringifiedValue)
-    setData(newQuestion)
+    // const stringifiedValue = JSON.stringify(newQuestion)
+    // localStorage.setItem('data', stringifiedValue)
+    setCards(newQuestion)
   }
   function handleDeleteButton(id) {
-    const filteredData = data.filter(card => card.id !== id)
+    const filteredData = cards.filter(card => card.id !== id)
     const stringifiedValue = JSON.stringify(filteredData)
     localStorage.setItem('data', stringifiedValue)
-    setData(filteredData)
+    setCards(filteredData)
   }
 }
 
